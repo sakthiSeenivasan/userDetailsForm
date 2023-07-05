@@ -1,0 +1,27 @@
+input.ng-invalid {
+    border-color: red;
+}
+
+.error-message {
+    color: red;
+    margin-left: 104px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.centered-form {
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.submit-form {
+    margin-left: 118px;
+    color: green
+}

@@ -1,24 +1,26 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FormDataService } from '../form-data.service';
 
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
-export class AppComponent {
+export class HomeComponent {
   title = 'userDetailsForm';
   myForm!: FormGroup;
-  constructor(private router:Router) { }
+  user: any;
+  constructor(private router: Router, private formDataService: FormDataService) { }
 
- ageValidator(control: AbstractControl): { [key: string]: boolean } | null {
+  ageValidator(control: AbstractControl): { [key: string]: boolean } | null {
     if (control.value) {
       const birthday = new Date(control.value);
       const today = new Date();
       const age = today.getFullYear() - birthday.getFullYear();
-  
+
       if (age < 18) {
         return { 'invalidAge': true };
       }
@@ -33,24 +35,28 @@ export class AppComponent {
       email: new FormControl(''),
       phoneNumber: new FormControl('', [Validators.required, Validators.pattern('[0-9]+')]),
       proofType: new FormControl('', [Validators.required]),
-      idNumber: new FormControl ('', [Validators.required, Validators.pattern('[A-Za-z0-9_\\-][A-Za-z0-9_\\-]*')]),
-      addr1: new FormControl ('', [Validators.required]),
+      idNumber: new FormControl('', [Validators.required, Validators.pattern('[A-Za-z0-9_\\-][A-Za-z0-9_\\-]*')]),
+      addr1: new FormControl('', [Validators.required]),
       addr2: new FormControl(''),
       addr3: new FormControl(''),
       landmark: new FormControl(''),
       city: new FormControl('', [Validators.required]),
       state: new FormControl('', [Validators.required]),
-      nominee: new FormControl('', [Validators.required]), 
-  });
+      nominee: new FormControl('', [Validators.required]),
+    });
   }
 
   onSubmit() {
-    if (this.myForm.controls.nominee.value === 'yes' ) {
+    this.formDataService.setFormData('user', this.myForm.value);
+    if (this.myForm.controls.nominee.value === 'yes') {
       // Handle form submission logic here
       console.log('ssss')
-      this.router.navigateByUrl('user-details');
+      this.router.navigateByUrl('users');
+    } else {
+      this.router.navigate(['/form-grid']);
+
     }
-    
+
   }
 
 }
